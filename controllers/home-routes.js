@@ -4,7 +4,6 @@ const { User, Post, Comment } = require("../models");
 
 // GET all blog posts for homepage
 router.get("/", async (req, res) => {
-  console.log(req.session);
   try {
     const dbPostData = await Post.findAll({
       include: [User],
@@ -45,13 +44,20 @@ router.get("/blogpost/:id", withAuth, async (req, res) => {
   }
 });
 
-// Signup route
-router.get("/signup", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
+router.get("/dashboard", async (req, res) => {
+  try {
+
+    const dbUserPostData = await Post.findAll({where: {user_id: req.session.userId}});
+
+    const userHistory = dbUserPostData.map((post) => post.get({ plain: true }));
+
+    // console.log(userHistory);
+
+    res.render("user-posts", { layout: "dashboard", data: { userHistory } })
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
   }
-  res.render("signup");
 });
 
 // Login route

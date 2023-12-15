@@ -1,19 +1,21 @@
 const { User } = require("../../models");
 const router = require("express").Router();
 
+// create a new account
 router.post("/", async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await User.create({ email, password });
+    const { username, email, password } = req.body;
+    const user = await User.create({ username, email, password });
+    req.session.userId = user.id;
+    req.session.loggedIn = true;
+    
     req.session.save(() => {
-      req.session.userId = user.id;
-      req.session.loggedIn = true;
-    });
-    res.redirect("/");
-    // User successfully created
-    res
+
+      res
       .status(201)
       .json({ message: "Account created successfully! Please log in." });
+    });
+    // User successfully created
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Internal server error" });
@@ -30,7 +32,7 @@ router.post("/login", async (req, res) => {
     });
 
     if (!dbUserData) {
-      console.log(dbUserData);
+      // console.log(dbUserData);
       res
         .status(400)
         .json({ message: "Incorrect email or password. Please try again!" });
@@ -40,7 +42,7 @@ router.post("/login", async (req, res) => {
     const validPassword = await dbUserData.checkPassword(req.body.password);
 
     if (!validPassword) {
-      console.log(validPassword);
+      // console.log(validPassword);
       res
         .status(400)
         .json({ message: "Incorrect email or password. Please try again!" });
@@ -48,6 +50,7 @@ router.post("/login", async (req, res) => {
     }
 
     req.session.loggedIn = true;
+    req.session.userId = dbUserData.id;
 
     req.session.save(() => {
 
