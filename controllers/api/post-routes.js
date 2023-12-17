@@ -7,7 +7,7 @@ router.post("/", withAuth, async (req, res) => {
   const body = req.body;
 
   try {
-    const newPost = await Post.create({ ...body, userId: req.session.user_id });
+    const newPost = await Post.create({ ...body, user_id: req.session.userId });
     res.json(newPost);
   } catch (err) {
     res.status(500).json(err);
@@ -51,5 +51,9 @@ router.delete("/:id", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+
+
 
 module.exports = router;

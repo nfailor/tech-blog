@@ -9,6 +9,9 @@
     <div class="card-body">
       {{post.body}}
     </div>
+    {{#if isPostOwner}} <!-- Check if the logged-in user is the owner of the post -->
+      <button class="btn" id="edit-post-btn">Edit</button>
+    {{/if}}
   </article>
 
   {{#if post.comments}}
@@ -47,6 +50,8 @@
       <button type="submit" class="btn">Submit</button>
     </div>
   </form>
+  
 </div>
 
 <script src="/js/comment.js"></script>
+<script src="/js/edit.js"></script>

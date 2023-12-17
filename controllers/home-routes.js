@@ -33,11 +33,14 @@ router.get("/blogpost/:id", withAuth, async (req, res) => {
       ],
     });
 
+    // Check if the logged-in user is the owner of the post
+    const isPostOwner = dbPostData && req.session.userId === dbPostData.user_id;
+
     const post = dbPostData.get({ plain: true });
 
     console.log(post);
 
-    res.render("single-post", { post, loggedIn: req.session.loggedIn });
+    res.render("single-post", { post, loggedIn: req.session.loggedIn, isPostOwner });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -58,6 +61,10 @@ router.get("/dashboard", async (req, res) => {
     console.log(err);
     res.status(500).json(err);
   }
+});
+
+router.get("/new-post", withAuth, (req, res) => {
+  res.render("new-post", { loggedIn: req.session.loggedIn });
 });
 
 // Login route
