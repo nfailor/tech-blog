@@ -38,9 +38,29 @@ router.get("/blogpost/:id", withAuth, async (req, res) => {
 
     const post = dbPostData.get({ plain: true });
 
-    console.log(post);
-
     res.render("single-post", { post, loggedIn: req.session.loggedIn, isPostOwner });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// GET route for editing a post
+router.get("/edit-post/:id", withAuth, async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const dbPostData = await Post.findByPk(postId, {
+      include: [User],
+    });
+
+    // Convert the Sequelize model instance to a plain JavaScript object
+    const post = dbPostData ? dbPostData.get({ plain: true }) : null;
+
+    // Check if the logged-in user is the owner of the post
+    const isPostOwner = dbPostData && req.session.userId === dbPostData.user_id;
+
+    // Pass the post data and isPostOwner to the edit-post template
+    res.render("edit-post", { post, loggedIn: req.session.loggedIn, isPostOwner });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -53,8 +73,6 @@ router.get("/dashboard", async (req, res) => {
     const dbUserPostData = await Post.findAll({where: {user_id: req.session.userId}});
 
     const userHistory = dbUserPostData.map((post) => post.get({ plain: true }));
-
-    // console.log(userHistory);
 
     res.render("user-posts", { layout: "dashboard", data: { userHistory } })
   } catch (err) {

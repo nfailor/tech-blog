@@ -1,3 +1,5 @@
+{{log "isPostOwner: " isPostOwner}}
+
 <div class="post">
   <article class="card">
     <div class="card-header flex-row justify-space-between">
@@ -10,7 +12,9 @@
       {{post.body}}
     </div>
     {{#if isPostOwner}} <!-- Check if the logged-in user is the owner of the post -->
-      <button class="btn" id="edit-post-btn">Edit</button>
+      <a href="/edit-post/{{post.id}}" class="btn" id="editPostForm">Edit</a>
+      <input type="hidden" id="post-id" value="{{post.id}}">
+        <button id="deletePostBtn" class="btn btn-danger">Delete Post</button>
     {{/if}}
   </article>
 

@@ -1,0 +1,28 @@
+<!-- edit-post.handlebars -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Post</title>
+</head>
+<body>
+
+  <h1>Edit Post</h1>
+
+  <form id="editPostForm" action="/api/posts/{{post.id}}" method="PUT">
+    <input type="hidden" id="post-id" value="{{post.id}}">
+    <label for="updatedTitle">Title:</label>
+    <input type="text" id="updatedTitle" name="updatedTitle" value="{{post.title}}" required>
+
+    <label for="updatedBody">Body:</label>
+    <textarea id="updatedBody" name="updatedBody" rows="4" required>{{post.body}}</textarea>
+
+    <button type="submit">Update Post</button>
+  </form>
+
+  <script src="/js/edit.js"></script>
+
+</body>
+</html>
