@@ -4,8 +4,8 @@ const bcrypt = require('bcrypt');
 const userdata = [
     {
         id: 1,
-        username: 'nfailor',
-        email: 'nfailor@gmail.com',
+        username: 'testUser',
+        email: 'testUser@gmail.com',
         password: '1234'
     }
 ];
