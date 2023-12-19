@@ -57,6 +57,8 @@ const deletePostHandler = async function (event) {
             "Content-Type": "application/json",
           },
         });
+        // Redirect to the dashboard or another appropriate page after deleting
+        window.location.href = "/dashboard";
 
       } catch (err) {
         console.error(err);
@@ -66,8 +68,6 @@ const deletePostHandler = async function (event) {
     console.error("Error: #post-id element not found");
   }
 
-  // Redirect to the dashboard or another appropriate page after deleting
-  window.location.href = "/dashboard";
 };
 
 // Attach the deletePostHandler to the delete button

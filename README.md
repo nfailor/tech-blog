@@ -27,8 +27,10 @@
 
   ## Usage
 
-  Usage of this project is designed to showcase the functionality of all front-end and back-end components while providing an application that users can seamlessly use.
+  Usage of this project is designed to showcase the functionality of all front-end and back-end components while providing an application that users can seamlessly use. Please view this application from the below Heroku link:
 
+  https://safe-brook-46248-bca8daceffba.herokuapp.com/
+  
   ## Licensing
 
   This project is licensed under the ISC license. [![GitHub License](https://img.shields.io/badge/license-ISC-blue.svg)

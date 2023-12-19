@@ -70,9 +70,11 @@ router.get("/edit-post/:id", withAuth, async (req, res) => {
 router.get("/dashboard", async (req, res) => {
   try {
 
-    const dbUserPostData = await Post.findAll({where: {user_id: req.session.userId}});
+    const dbUserPostData = await Post.findAll({where: {user_id: req.session.userId}, include: [User]});
 
     const userHistory = dbUserPostData.map((post) => post.get({ plain: true }));
+
+    console.log(userHistory);
 
     res.render("user-posts", { layout: "dashboard", data: { userHistory } })
   } catch (err) {

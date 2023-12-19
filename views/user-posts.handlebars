@@ -1,3 +1,5 @@
+{{log "userHistory: " data.userHistory}}
+
 <div class="posts">
   {{#each data.userHistory}}
   {{log "userHistory: " data.userHistory}}
@@ -7,7 +9,7 @@
         <a href="/blogpost/{{id}}">{{title}}</a>
       </h2>
       <div>
-        Posted by {{user_id}} on {{format_date createdAt}}
+        Posted by {{user.username}} on {{format_date createdAt}}
       </div>
     </div>
     <div class="card-body">
